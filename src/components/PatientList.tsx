@@ -8,7 +8,7 @@ interface PatientListProps {
   onDelete: (id: string) => void;
 }
 
-const PatientList: React.FC<PatientListProps> = ({ onEdit, onDelete }) => {
+const PatientList: React.FC<PatientListProps> = ({ onEdit }) => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { LoginRequest, LoginResponse } from '../types/Auth';
 
-const API_BASE_URL = 'http://localhost:4000';
+// API_BASE_URL is not currently used in this service
 
 class AuthService {
   private token: string | null = localStorage.getItem('token');
