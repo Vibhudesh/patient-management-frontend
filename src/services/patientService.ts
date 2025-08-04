@@ -14,7 +14,7 @@ const patientService = {
         name: patient.name,
         email: patient.email,
         address: patient.address,
-        dateOfBirth: patient.dataOfBirth, // Map the typo from backend
+        dateOfBirth: patient.dataOfBirth, // Map backend typo to correct frontend field
         registeredDate: new Date().toISOString().split('T')[0] // Default value since backend doesn't return it
       }));
     } catch (error) {
@@ -27,14 +27,21 @@ const patientService = {
   async createPatient(patient: PatientRequest): Promise<Patient> {
     try {
       logger.info('Creating patient:', patient);
-      const response = await api.post<PatientResponse>('/patients', patient);
+      // Map frontend dateOfBirth to backend dataOfBirth for the request
+      const requestData = {
+        name: patient.name,
+        email: patient.email,
+        address: patient.address,
+        dataOfBirth: patient.dateOfBirth // Map to backend's typo field
+      };
+      const response = await api.post<PatientResponse>('/patients', requestData);
       logger.info('Patient created:', response.data);
       return {
         id: response.data.id,
         name: response.data.name,
         email: response.data.email,
         address: response.data.address,
-        dateOfBirth: response.data.dataOfBirth,
+        dateOfBirth: response.data.dataOfBirth, // Map backend typo to correct frontend field
         registeredDate: new Date().toISOString().split('T')[0]
       };
     } catch (error) {
@@ -47,14 +54,21 @@ const patientService = {
   async updatePatient(id: string, patient: PatientRequest): Promise<Patient> {
     try {
       logger.info('Updating patient:', id, patient);
-      const response = await api.put<PatientResponse>(`/patients/${id}`, patient);
+      // Map frontend dateOfBirth to backend dataOfBirth for the request
+      const requestData = {
+        name: patient.name,
+        email: patient.email,
+        address: patient.address,
+        dataOfBirth: patient.dateOfBirth // Map to backend's typo field
+      };
+      const response = await api.put<PatientResponse>(`/patients/${id}`, requestData);
       logger.info('Patient updated:', response.data);
       return {
         id: response.data.id,
         name: response.data.name,
         email: response.data.email,
         address: response.data.address,
-        dateOfBirth: response.data.dataOfBirth,
+        dateOfBirth: response.data.dataOfBirth, // Map backend typo to correct frontend field
         registeredDate: new Date().toISOString().split('T')[0]
       };
     } catch (error) {
