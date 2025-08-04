@@ -14,8 +14,7 @@ const patientService = {
         name: patient.name,
         email: patient.email,
         address: patient.address,
-        dateOfBirth: patient.dataOfBirth, // Map backend typo to correct frontend field
-        registeredDate: new Date().toISOString().split('T')[0] // Default value since backend doesn't return it
+        dateOfBirth: patient.dateOfBirth, // Use correct field
       }));
     } catch (error) {
       logger.error('Error fetching patients:', error);
@@ -32,7 +31,7 @@ const patientService = {
         name: patient.name,
         email: patient.email,
         address: patient.address,
-        dataOfBirth: patient.dateOfBirth // Map to backend's typo field
+        dateOfBirth: patient.dateOfBirth // Use correct field
       };
       const response = await api.post<PatientResponse>('/patients', requestData);
       logger.info('Patient created:', response.data);
@@ -41,7 +40,7 @@ const patientService = {
         name: response.data.name,
         email: response.data.email,
         address: response.data.address,
-        dateOfBirth: response.data.dataOfBirth, // Map backend typo to correct frontend field
+        dateOfBirth: response.data.dateOfBirth, // Map backend typo to correct frontend field
         registeredDate: new Date().toISOString().split('T')[0]
       };
     } catch (error) {
@@ -59,7 +58,7 @@ const patientService = {
         name: patient.name,
         email: patient.email,
         address: patient.address,
-        dataOfBirth: patient.dateOfBirth // Map to backend's typo field
+        dateOfBirth: patient.dateOfBirth // Use correct field
       };
       const response = await api.put<PatientResponse>(`/patients/${id}`, requestData);
       logger.info('Patient updated:', response.data);
@@ -68,7 +67,7 @@ const patientService = {
         name: response.data.name,
         email: response.data.email,
         address: response.data.address,
-        dateOfBirth: response.data.dataOfBirth, // Map backend typo to correct frontend field
+        dateOfBirth: response.data.dateOfBirth, // Map backend typo to correct frontend field
         registeredDate: new Date().toISOString().split('T')[0]
       };
     } catch (error) {

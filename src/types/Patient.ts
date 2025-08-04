@@ -20,5 +20,5 @@ export interface PatientResponse {
   name: string;
   email: string;
   address: string;
-  dataOfBirth: string; // Note: backend has a typo in the field name
+  dateOfBirth: string; // Note: backend has a typo in the field name
 } 
