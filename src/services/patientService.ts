@@ -1,13 +1,14 @@
-import axios from 'axios';
+import logger from '../utils/logger';
+import api from './api';
 import type { Patient, PatientRequest, PatientResponse } from '../types/Patient';
-
-const API_BASE_URL = 'http://localhost:4000';
 
 const patientService = {
   // Get all patients
   async getPatients(): Promise<Patient[]> {
     try {
-      const response = await axios.get<PatientResponse[]>(`${API_BASE_URL}/patients`);
+      logger.info('Requesting all patients...');
+      const response = await api.get<PatientResponse[]>('/patients');
+      logger.info('Received patients:', response.data);
       return response.data.map(patient => ({
         id: patient.id,
         name: patient.name,
@@ -17,7 +18,7 @@ const patientService = {
         registeredDate: new Date().toISOString().split('T')[0] // Default value since backend doesn't return it
       }));
     } catch (error) {
-      console.error('Error fetching patients:', error);
+      logger.error('Error fetching patients:', error);
       throw error;
     }
   },
@@ -25,7 +26,9 @@ const patientService = {
   // Create a new patient
   async createPatient(patient: PatientRequest): Promise<Patient> {
     try {
-      const response = await axios.post<PatientResponse>(`${API_BASE_URL}/patients`, patient);
+      logger.info('Creating patient:', patient);
+      const response = await api.post<PatientResponse>('/patients', patient);
+      logger.info('Patient created:', response.data);
       return {
         id: response.data.id,
         name: response.data.name,
@@ -35,7 +38,7 @@ const patientService = {
         registeredDate: new Date().toISOString().split('T')[0]
       };
     } catch (error) {
-      console.error('Error creating patient:', error);
+      logger.error('Error creating patient:', error);
       throw error;
     }
   },
@@ -43,7 +46,9 @@ const patientService = {
   // Update a patient
   async updatePatient(id: string, patient: PatientRequest): Promise<Patient> {
     try {
-      const response = await axios.put<PatientResponse>(`${API_BASE_URL}/patients/${id}`, patient);
+      logger.info('Updating patient:', id, patient);
+      const response = await api.put<PatientResponse>(`/patients/${id}`, patient);
+      logger.info('Patient updated:', response.data);
       return {
         id: response.data.id,
         name: response.data.name,
@@ -53,7 +58,7 @@ const patientService = {
         registeredDate: new Date().toISOString().split('T')[0]
       };
     } catch (error) {
-      console.error('Error updating patient:', error);
+      logger.error('Error updating patient:', error);
       throw error;
     }
   },
@@ -61,9 +66,11 @@ const patientService = {
   // Delete a patient
   async deletePatient(id: string): Promise<void> {
     try {
-      await axios.delete(`${API_BASE_URL}/patients/${id}`);
+      logger.info('Deleting patient:', id);
+      await api.delete(`/patients/${id}`);
+      logger.info('Patient deleted:', id);
     } catch (error) {
-      console.error('Error deleting patient:', error);
+      logger.error('Error deleting patient:', error);
       throw error;
     }
   }
