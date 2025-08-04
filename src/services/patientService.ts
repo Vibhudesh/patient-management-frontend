@@ -15,6 +15,7 @@ const patientService = {
         email: patient.email,
         address: patient.address,
         dateOfBirth: patient.dateOfBirth, // Use correct field
+        registeredDate: new Date().toISOString().split('T')[0] // Default value since backend doesn't return it
       }));
     } catch (error) {
       logger.error('Error fetching patients:', error);
