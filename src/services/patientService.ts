@@ -32,7 +32,8 @@ const patientService = {
         name: patient.name,
         email: patient.email,
         address: patient.address,
-        dateOfBirth: patient.dateOfBirth // Use correct field
+        dateOfBirth: patient.dateOfBirth, // Use correct field
+        registeredDate: new Date().toISOString().split('T')[0] // Add current date as registered date
       };
       const response = await api.post<PatientResponse>('/patients', requestData);
       logger.info('Patient created:', response.data);
@@ -59,7 +60,8 @@ const patientService = {
         name: patient.name,
         email: patient.email,
         address: patient.address,
-        dateOfBirth: patient.dateOfBirth // Use correct field
+        dateOfBirth: patient.dateOfBirth, // Use correct field
+        registeredDate: new Date().toISOString().split('T')[0]
       };
       const response = await api.put<PatientResponse>(`/patients/${id}`, requestData);
       logger.info('Patient updated:', response.data);
